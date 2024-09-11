@@ -940,7 +940,7 @@ func (s *Server) handleRawConn(lisAddr string, rawConn net.Conn) {
 	// Finish handshaking (HTTP2)
 	st := s.newHTTP2Transport(rawConn)
 	rawConn.SetDeadline(time.Time{})
-	fmt.Printf("new-grpc-connection")
+	fmt.Printf("new-grpc-connection\n")
 
 	if st == nil {
 		return

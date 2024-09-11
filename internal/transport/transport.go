@@ -302,6 +302,10 @@ func (s *Stream) isHeaderSent() bool {
 	return atomic.LoadUint32(&s.headerSent) == 1
 }
 
+func (s *Stream) GetId() uint32 {
+	return s.id
+}
+
 // updateHeaderSent updates headerSent and returns true
 // if it was alreay set. It is valid only on server-side.
 func (s *Stream) updateHeaderSent() bool {

@@ -1348,7 +1348,7 @@ func (s *Server) processUnaryRPC(ctx context.Context, t transport.ServerTranspor
 		payInfo = &payloadInfo{}
 	}
 	d, err := recvAndDecompress(&parser{r: stream, recvBufferPool: s.opts.recvBufferPool}, stream, dc, s.opts.maxReceiveMessageSize, payInfo, decomp)
-	fmt.Printf("grpc-handler %d len of log-records\n", len(d))
+	fmt.Printf("grpc-handler %d len of log-records and streamId=%d \n", len(d), stream.GetId())
 	if err != nil {
 		if e := t.WriteStatus(stream, status.Convert(err)); e != nil {
 			channelz.Warningf(logger, s.channelzID, "grpc: Server.processUnaryRPC failed to write status: %v", e)

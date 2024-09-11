@@ -1021,12 +1021,15 @@ func (s *Server) serveStreams(ctx context.Context, st transport.ServerTransport,
 
 	streamQuota := newHandlerQuota(s.opts.maxConcurrentStreams)
 	st.HandleStreams(ctx, func(stream *transport.Stream) {
+		fmt.Printf("stream-arrival with id= %d arrived\n", stream.id)
 		s.handlersWG.Add(1)
 		streamQuota.acquire()
+		fmt.Printf("stream-lock-acquired for steam with id= %d arrived\n", stream.id)
 		f := func() {
 			defer streamQuota.release()
 			defer s.handlersWG.Done()
 			s.handleStream(st, stream)
+			fmt.Printf("stream-handled for steam with id= %d arrived\n", stream.id)
 		}
 
 		if s.opts.numServerWorkers > 0 {
